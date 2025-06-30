@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Forest Exploration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2E7D32;
+            --secondary: #4CAF50;
+            --accent: #FF9800;
+            --dark: #1B5E20;
+            --light: #E8F5E9;
+            --water: #29B6F6;
+            --earth: #795548;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #e6f7e6, #c8e6c9);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            height: 85vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1547981609-4b6bf67a23ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #e68a00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img {
+            height: 220px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .card p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .card .btn {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+
+        .river-section {
+            background: linear-gradient(to bottom, #e6f7ff, #b3e0ff);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .river-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%2329B6F6"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%2329B6F6"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%2329B6F6"></path></svg>') no-repeat center/cover;
+        }
+
+        .tribes-section {
+            background: linear-gradient(to bottom, #f5f5dc, #d2b48c);
+        }
+
+        .tribe-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .tribe-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--earth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .map-container {
+            height: 500px;
+            background: #e9f5e9;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1619546952812-520e98064a52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .map-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            max-width: 700px;
+        }
+
+        .map-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .map-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .facts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .fact-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .fact-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .fact-card h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--dark), #0d3b11);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        /* Animation effects */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-tree"></i>
+                    <span>Amazon Forest</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#flora">Flora</a></li>
+                    <li><a href="#fauna">Fauna</a></li>
+                    <li><a href="#rivers">Rivers</a></li>
+                    <li><a href="#tribes">Tribes</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Explore the Wonders of the Amazon Rainforest</h1>
+            <p>Discover the world's largest tropical rainforest, home to unparalleled biodiversity and unique indigenous cultures.</p>
+            <a href="#about" class="btn floating">Begin Exploration</a>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">The Lungs of Our Planet</h2>
+            <p style="text-align: center; max-width: 900px; margin: 0 auto 40px; font-size: 1.1rem;">
+                The Amazon rainforest spans across nine South American countries, with the majority in Brazil. 
+                Covering over 5.5 million square kilometers, it represents over half of the planet's remaining rainforests 
+                and is the most biodiverse tract of tropical rainforest in the world.
+            </p>
+            
+            <div class="map-container">
+                <div class="map-overlay">
+                    <div class="map-content">
+                        <h2>Amazon Rainforest Location</h2>
+                        <p>The Amazon basin spans across Brazil, Peru, Colombia, Venezuela, Ecuador, Bolivia, Guyana, Suriname, and French Guiana</p>
+                        <a href="#" class="btn">View Detailed Map</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="facts-container">
+                <div class="fact-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Biodiversity</h3>
+                    <p>Home to 10% of all known species on Earth</p>
+                </div>
+                <div class="fact-card">
+                    <i class="fas fa-water"></i>
+                    <h3>River System</h3>
+                    <p>Amazon River is the world's largest by discharge volume</p>
+                </div>
+                <div class="fact-card">
+                    <i class="fas fa-people-group"></i>
+                    <h3>Indigenous Tribes</h3>
+                    <p>Over 400 distinct indigenous groups</p>
+                </div>
+                <div class="fact-card">
+                    <i class="fas fa-cloud"></i>
+                    <h3>Climate Regulation</h3>
+                    <p>Produces 20% of Earth's oxygen</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="flora">
+        <div class="container">
+            <h2 class="section-title">Flora of the Amazon</h2>
+            <p style="text-align: center; max-width: 900px; margin: 0 auto 40px; font-size: 1.1rem;">
+                The Amazon rainforest contains an astonishing diversity of plant life, with over 40,000 plant species, 
+                including 16,000 tree species. These plants form complex ecosystems and provide essential resources for the forest's inhabitants.
+            </p>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Giant Water Lily">
+                    </div>
+                    <div class="card-content">
+                        <h3>Giant Water Lily</h3>
+                        <p>Victoria amazonica has leaves that can grow over 3 meters in diameter and support the weight of a small child.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Rubber Tree">
+                    </div>
+                    <div class="card-content">
+                        <h3>Rubber Tree</h3>
+                        <p>Hevea brasiliensis is the primary source of natural rubber and can grow up to 40 meters tall.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1542601904-9b7c2c0c0d7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Brazil Nut Tree">
+                    </div>
+                    <div class="card-content">
+                        <h3>Brazil Nut Tree</h3>
+                        <p>Bertholletia excelsa produces large, woody fruits containing nutritious seeds that are an important food source.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="fauna">
+        <div class="container">
+            <h2 class="section-title">Fauna of the Amazon</h2>
+            <p style="text-align: center; max-width: 900px; margin: 0 auto 40px; font-size: 1.1rem;">
+                The Amazon is home to an incredible variety of animal life, including more than 2.5 million insect species, 
+                2,000 bird species, and over 400 mammal species. Many of these species are found nowhere else on Earth.
+            </p>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1550853024-fae8cd4be47f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Jaguar">
+                    </div>
+                    <div class="card-content">
+                        <h3>Jaguar</h3>
+                        <p>The largest cat in the Americas and a keystone species in the Amazon ecosystem.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1561736778-92e52a7769ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Macaw">
+                    </div>
+                    <div class="card-content">
+                        <h3>Scarlet Macaw</h3>
+                        <p>Iconic colorful parrots that play a vital role in seed dispersal throughout the rainforest.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Poison Dart Frog">
+                    </div>
+                    <div class="card-content">
+                        <h3>Poison Dart Frog</h3>
+                        <p>Small, brightly colored frogs whose skin secretions contain powerful toxins used by indigenous people.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section river-section" id="rivers">
+        <div class="container">
+            <h2 class="section-title">Mighty Rivers</h2>
+            <p style="text-align: center; max-width: 900px; margin: 0 auto 40px; font-size: 1.1rem; color: #0a3d62;">
+                The Amazon River system is the world's largest drainage system, with over 1,100 tributaries, 
+                17 of which are longer than 1,600 kilometers. This vast network of rivers shapes the landscape 
+                and provides essential resources for the forest and its inhabitants.
+            </p>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1619546952812-520e98064a52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Amazon River">
+                    </div>
+                    <div class="card-content">
+                        <h3>Amazon River</h3>
+                        <p>The largest river by discharge volume in the world, stretching approximately 6,400 km.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1593692909680-1e0a2b1c32b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Rio Negro">
+                    </div>
+                    <div class="card-content">
+                        <h3>Rio Negro</h3>
+                        <p>The largest left tributary of the Amazon and the world's largest blackwater river.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1526779259212-939e64788e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Madeira River">
+                    </div>
+                    <div class="card-content">
+                        <h3>Madeira River</h3>
+                        <p>One of the Amazon's major tributaries, known for its rich gold deposits along its course.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tribes-section" id="tribes">
+        <div class="container">
+            <h2 class="section-title">Indigenous Tribes</h2>
+            <p style="text-align: center; max-width: 900px; margin: 0 auto 40px; font-size: 1.1rem;">
+                The Amazon rainforest is home to more than 400 distinct indigenous groups, each with their own language, 
+                culture, and territory. These tribes have lived sustainably in the rainforest for thousands of years, 
+                possessing invaluable knowledge about the forest ecosystem.
+            </p>
+            
+            <div class="cards-container">
+                <div class="card tribe-card">
+                    <div class="tribe-icon">
+                        <i class="fas fa-people-arrows"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Yanomami</h3>
+                        <p>One of the largest relatively isolated tribes in South America, living in northern Brazil and southern Venezuela.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card tribe-card">
+                    <div class="tribe-icon">
+                        <i class="fas fa-bow-arrow"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Awá</h3>
+                        <p>Known as the world's most threatened tribe, they live as nomadic hunter-gatherers in Brazil.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="card tribe-card">
+                    <div class="tribe-icon">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Tikuna</h3>
+                        <p>The largest indigenous group in the Brazilian Amazon, known for their intricate art and mask-making traditions.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Amazon Forest</h3>
+                    <p>Dedicated to preserving and celebrating the incredible biodiversity and cultural heritage of the Amazon rainforest.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <p><a href="#about" style="color: white; text-decoration: none;">About the Amazon</a></p>
+                    <p><a href="#flora" style="color: white; text-decoration: none;">Flora</a></p>
+                    <p><a href="#fauna" style="color: white; text-decoration: none;">Fauna</a></p>
+                    <p><a href="#rivers" style="color: white; text-decoration: none;">Rivers</a></p>
+                    <p><a href="#tribes" style="color: white; text-decoration: none;">Indigenous Tribes</a></p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Conservation</h3>
+                    <p>Support organizations working to protect the Amazon rainforest and its indigenous communities.</p>
+                    <a href="#" class="btn">Donate Now</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Amazon Forest Exploration Project. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Floating animation for cards on hover
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('floating');
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('floating');
+            });
+        });
+
+        // Hero button animation
+        const heroBtn = document.querySelector('.hero .btn');
+        setInterval(() => {
+            heroBtn.classList.toggle('floating');
+        }, 3000);
+    </script>
+</body>
+</html>
